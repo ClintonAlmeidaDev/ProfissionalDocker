@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+
+    volumes:
+      - postgres_vol
+    networks:
+      - produto_postgres_net
+
+  pgadmin4:
+    image: dpage/pgadmin4:7.4
+    restart: always
+    ports:
+      - 9091:80
+    networks:
+      - produto_postgres_net
+    volumes:
+      - postgres_vol
+    environment:
+      PGADMIN_DEFAULT_EMAIL: clinton.almeida10@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - postgres
+volumes:
+  postgres_vol:
+
+networks:
+  produto_postgres_net:
+    driver: bridge

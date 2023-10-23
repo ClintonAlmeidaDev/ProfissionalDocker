@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+      MYSQL_DATABASE: my_database
+    volumes:
+      - maria_vol
+    networks:
+      - produto_maria_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - 9091:80
+    networks:
+      - produto_maria_net
+    volumes:
+      - maria_vol
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    depends_on:
+      - mariadb
+volumes:
+  maria_vol:
+
+networks:
+  produto_maria_net:
+    driver: bridge

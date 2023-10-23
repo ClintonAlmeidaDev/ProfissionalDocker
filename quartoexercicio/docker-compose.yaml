@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+
+  redis:
+    image: redis:latest
+    restart: always
+
+    volumes:
+      - redis_vol
+    networks:
+      - produto_redis_net
+
+  rediscommander:
+    image: rediscommander/redis-commander
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - produto_redis_net
+    volumes:
+      - redis_vol
+    environment:
+    - REDIS_HOSTS=local:redis:6379
+    depends_on:
+      - redis
+volumes:
+  redis_vol:
+
+networks:
+  produto_redis_net:
+    driver: bridge
