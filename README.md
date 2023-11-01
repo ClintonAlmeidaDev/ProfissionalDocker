@@ -19,4 +19,6 @@ Exercicio 6 ficou separado nas seguintes portas:
       - "8080
 
 Em apenas um compose
+
+Desafio concluido
   
